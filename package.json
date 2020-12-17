@@ -1,0 +1,23 @@
+{
+  "name": "date-planner-api",
+  "version": "1.0.0",
+  "description": "API for Date Planner App",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mfallesen/date-planner-api.git"
+  },
+  "author": "Mike Fallesen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mfallesen/date-planner-api/issues"
+  },
+  "homepage": "https://github.com/mfallesen/date-planner-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
