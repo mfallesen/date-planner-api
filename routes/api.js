@@ -9,33 +9,37 @@ const city = 'Seattle'
 
 // Call for city id
 const query_url_city = `https://developers.zomato.com/api/v2.1/locations?query=${city}&apikey=${ZOMATO}`
-// const query_url_rest = `https://developers.zomato.com/api/v2.1/search?lat=${lat}&lon=${lon}&sort=rating&order=dec&apikey=${zomatoKey}`;
 
-// axios.get(query_url_city)
-//     .then( (res) => {
-//         console.log(res)
-//     });
 
- router.get("/api/call", () =>{
+
+
+ router.get("/api/call", (req, res) =>{
     console.log("call made!");
     async function testCall() {
         try {
           const response = await axios.get(`https://developers.zomato.com/api/v2.1/locations?query=${city}&apikey=${ZOMATO}`);
           console.log(response.data);
+          if (response.data.location_suggestions.length === 0) {
+
+            // this needs to show to the user.
+              console.log("Please enter a valid city");
+          }
+          let lat = response.data.location_suggestions[0].latitude
+          let lon = response.data.location_suggestions[0].longitude
+
+          const query_url_rest = `https://developers.zomato.com/api/v2.1/search?lat=${lat}&lon=${lon}&apikey=${ZOMATO}`;
+        //   chain call here and return entire response
+          const results = await axios.get (query_url_rest)
+          let i = Math.floor(Math.random() * 21);
+          console.log('Call results ', results.data.restaurants[i]);
+          
+          
+          
+          res.send(response.data)
         } catch (error) {
-          console.error('wrong');
+          console.error(error, 'wrong');
         }
       }
-
-    
-    // axios({
-    //     method: 'get',
-    //     url: `https://developers.zomato.com/api/v2.1/locations?query=${city}&apikey=${ZOMATO}`,
-    //     responseType: 'json' 
-    // })
-    // .then( (res) => {
-    //     console.log(res.data)
-    // });
     testCall();
 })
 
